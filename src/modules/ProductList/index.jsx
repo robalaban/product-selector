@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Link } from "react-router-dom"
 
 const SingleProduct = ({ ...props }) => (
   <li className="products--single">
@@ -8,6 +9,7 @@ const SingleProduct = ({ ...props }) => (
       alt={props.name}
     />
     <h2 className="products--single__name">{props.name}</h2>
+    <Link to={props.sku}>View Product</Link>
   </li>
 )
 
@@ -19,7 +21,12 @@ class ProductList extends Component {
         <h1 className="container--title">Our Products</h1>
         <ul className="products">
           {data.map((val, idx) => (
-            <SingleProduct image={val["image"]} name={val["name"]} key={idx} />
+            <SingleProduct
+              image={val["image"]}
+              name={val["name"]}
+              sku={val["sku"]}
+              key={idx}
+            />
           ))}
         </ul>
       </div>
