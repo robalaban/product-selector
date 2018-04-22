@@ -1,0 +1,191 @@
+{
+  "products": [
+    {
+      "sku": "ACME101",
+      "name": "Rocket Powered Roller Skates",
+      "brand": "ACME",
+      "description": "Lets you skate at unlimited speed",
+      "image": "https://res.cloudinary.com/heist-1/image/upload/v1524122035/jetskates_nnxq51.jpg",
+      "variants": [
+        {
+          "sku": "ACME101-01",
+          "color": "Red",
+          "price": {
+            "gbp": 12.99,
+            "eur": 14.95,
+            "usd": 18.50
+          },
+          "sizes": [
+            {
+              "sku": "ACME101-01-01",
+              "quantity": 123,
+              "label":
+              {
+                "uk": 4,
+                "eu": 37,
+                "us": 6
+              }
+            },
+            {
+              "sku": "ACME101-01-02",
+              "quantity": 43,
+              "label":
+              {
+                "uk": 5,
+                "eu": 38,
+                "us": 7
+              }
+            },
+            {
+              "sku": "ACME101-01-03",
+              "quantity": 0,
+              "label":
+              {
+                "uk": 6,
+                "eu": 39,
+                "us": 8
+              }
+            }
+          ]
+        },
+        {
+          "sku": "ACME101-02",
+          "color": "Blue",
+          "price": {
+            "gbp": 13.99,
+            "eur": 16.05,
+            "usd": 19.75
+          },
+          "sizes": [
+            {
+              "sku": "ACME101-02-01",
+              "quantity": 10,
+              "label":
+              {
+                "uk": 4,
+                "eu": 37,
+                "us": 6
+              }
+            },
+            {
+              "sku": "ACME101-02-02",
+              "quantity": 443,
+              "label":
+              {
+                "uk": 5,
+                "eu": 38,
+                "us": 7
+              }
+            },
+            {
+              "sku": "ACME101-02-04",
+              "quantity": 3,
+              "label":
+              {
+                "uk": 7,
+                "eu": "40-41",
+                "us": 7.5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "ACME102",
+      "name": "Speed Skates",
+      "brand": "ACME",
+      "description": "Lets you ice skate at various speeds",
+      "image": "https://res.cloudinary.com/heist-1/image/upload/v1524122034/speedskates_yuatm7.jpg",
+      "variants": [
+        {
+          "sku": "ACME102-03",
+          "color": "Black",
+          "price": {
+            "gbp": 21.50,
+            "eur": 24.66,
+            "usd": 30.50
+          },
+          "sizes": [
+            {
+              "sku": "ACME102-03-01",
+              "quantity": 9,
+              "label":
+              {
+                "uk": 4,
+                "eu": 37,
+                "us": 6
+              }
+            },
+            {
+              "sku": "ACME102-03-02",
+              "quantity": 13,
+              "label":
+              {
+                "uk": 5,
+                "eu": 38,
+                "us": 7
+              }
+            },
+            {
+              "sku": "ACME102-03-03",
+              "quantity": 99,
+              "label":
+              {
+                "uk": 6,
+                "eu": 39,
+                "us": 8
+              }
+            }
+          ]
+        },
+        {
+          "sku": "ACME103-02",
+          "color": "Blue",
+          "price": {
+            "gbp": 25.50,
+            "eur": 29.25,
+            "usd": 36.25
+          },
+          "sale_price": {
+            "gbp": 15.50,
+            "eur": 17.78,
+            "usd": 22.00
+          },
+          "sizes": [
+            {
+              "sku": "ACME103-02-01",
+              "quantity": 410,
+              "label":
+              {
+                "uk": 4,
+                "eu": 37,
+                "us": 6
+              }
+            },
+            {
+              "sku": "ACME103-02-04",
+              "quantity": 43,
+              "label":
+              {
+                "uk": 7,
+                "eu": "40-41",
+                "us": 7.5
+              }
+            },
+            {
+              "sku": "ACME103-02-05",
+              "quantity": 75,
+              "label":
+              {
+                "uk": 7.5,
+                "eu": 41,
+                "us": 8
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
