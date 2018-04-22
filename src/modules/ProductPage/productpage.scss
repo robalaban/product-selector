@@ -1,0 +1,23 @@
+.product {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  &--info {
+    flex-basis: 250px;
+  }
+  &--controls {
+    display: flex;
+    flex-flow: column;
+    height: 30%;
+    justify-content: space-evenly;
+  }
+  &--media {
+    min-width: 0;
+    margin: 5px;
+    img {
+      width: 450px;
+      max-width: 100%;
+      max-height: 450px;
+    }
+  }
+}

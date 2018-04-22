@@ -5,6 +5,8 @@ import Header from "../../components/Header"
 import ProductList from "../ProductList"
 import ProductPage from "../ProductPage"
 
+import "./main.css"
+
 class App extends Component {
   render() {
     const data = Data.products

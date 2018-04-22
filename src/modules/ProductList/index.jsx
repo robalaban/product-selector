@@ -2,6 +2,8 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import Header from "../../components/Header"
 
+import "./productlist.css"
+
 const SingleProduct = ({ ...props }) => (
   <li className="products--single">
     <img
@@ -10,7 +12,9 @@ const SingleProduct = ({ ...props }) => (
       alt={props.name}
     />
     <h2 className="products--single__name">{props.name}</h2>
-    <Link to={props.sku}>View Product</Link>
+    <Link className="products--single__link" to={props.sku}>
+      View Product
+    </Link>
   </li>
 )
 

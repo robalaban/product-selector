@@ -6,14 +6,16 @@ import {
   CartButton
 } from "./components/components"
 
+import "./productpage.css"
+
 class ProductPage extends Component {
   constructor(props) {
     super(props)
     const product = props.data.find(v => v["sku"] === props.match.params.sku)
     this.state = {
       product: product,
-      priceRange: [],
-      saleRange: [],
+      price: [],
+      salePrice: [],
       selectedColor: "Color",
       colorId: null,
       sizeId: null,
@@ -23,61 +25,67 @@ class ProductPage extends Component {
   }
 
   componentDidMount() {
-    this._getPriceInterval(
-      this.state.product["variants"],
-      "price",
-      this.state.priceRange
-    )
-
-    if (this.state.sale) {
-      this._getPriceInterval(
-        this.state.product["variants"],
-        "sale_price",
-        this.state.saleRange
-      )
-    }
+    this._getPriceInterval(this.state.product["variants"])
   }
-
-  _getPriceInterval = (variants, checkAgainst, range) => {
+  _getPriceInterval = variants => {
     /* 
       Cycles our Variant and set a hi and low, for the selected
       currency. If hi is equal to low, that menas that there is no
       difference in our Product and shows only low
     */
     let { hi, low } = 0
-    let originalPrice = []
     let sale = false
+    let price = []
+    let salePrice = []
 
     for (let i = 0; i < variants.length; i++) {
-      if (!("sale_price" in variants[i])) {
-        checkAgainst = "price"
-      } else {
-        sale = true
-      }
-
       if (i === 0) {
-        low = variants[i][checkAgainst]["gbp"]
-        hi = variants[i][checkAgainst]["gbp"]
+        low = variants[i]["price"]["gbp"]
+        hi = variants[i]["price"]["gbp"]
         continue
       }
 
-      if (low > variants[i][checkAgainst]["gbp"]) {
-        low = variants[i][checkAgainst]["gbp"]
-      } else if (hi < variants[i][checkAgainst]["gbp"]) {
-        hi = variants[i][checkAgainst]["gbp"]
+      if (low > variants[i]["price"]["gbp"]) {
+        low = variants[i]["price"]["gbp"]
+      } else if (hi < variants[i]["price"]["gbp"]) {
+        hi = variants[i]["price"]["gbp"]
+      }
+
+      if ("sale_price" in variants[i]) {
+        if (low !== hi) {
+          price.push(low, hi)
+        } else {
+          price.push(low)
+        }
+
+        hi = low
+        low = variants[i]["sale_price"]["gbp"]
+
+        if (low !== hi) {
+          salePrice.push(low, hi)
+        } else {
+          salePrice.push(low)
+        }
+      } else {
+        if (low !== hi) {
+          price.push(low, hi)
+        } else {
+          price.push(low)
+        }
       }
     }
 
-    if (low !== hi) {
-      range.push(low, hi)
+    if (salePrice.length > 0) {
+      this.setState({
+        price: price,
+        salePrice: salePrice,
+        sale: true
+      })
     } else {
-      range.push(low)
+      this.setState({
+        price: price
+      })
     }
-
-    this.setState({
-      range: range,
-      sale: sale
-    })
   }
 
   _selectColor = event => {
@@ -93,7 +101,6 @@ class ProductPage extends Component {
 
   _selectSize = event => {
     let sizes = this.state.product["variants"][this.state.colorId]["sizes"]
-    console.log(this.state.product["variants"][this.state.colorId])
     let sizeId = sizes.findIndex(v => v["label"]["uk"] == event.target.value)
 
     this.setState({
@@ -120,55 +127,59 @@ class ProductPage extends Component {
     return (
       <div className="container">
         <div className="product">
-          <img src={product["image"]} alt={product["name"]} />
+          <div className="product--media">
+            <img src={product["image"]} alt={product["name"]} />
+          </div>
           <div className="product--info">
             <h2>{product["name"]}</h2>
-            {this.state.priceRange.map((val, idx) => (
-              <span key={idx}>{val}</span>
-            ))}
+            {this.state.price.map((val, idx) => <span key={idx}>{val}</span>)}
             {this.state.sale && (
               <span>
                 <span>RRP: </span>
-                {this.state.saleRange.map((val, idx) => (
+                {this.state.salePrice.map((val, idx) => (
                   <span key={idx}>{val}</span>
                 ))}
               </span>
             )}
             <p>{product["description"]}</p>
 
-            <select
-              value={this.state.selectedColor}
-              onChange={this._selectColor}
-            >
-              <option value="" selected>
-                Color
-              </option>
-              {product["variants"].map((val, idx) => (
-                <SelectColor {...product["variants"][idx]} key={idx} />
-              ))}
-            </select>
-
-            <select value={this.state.selectedSize} onChange={this._selectSize}>
-              <option value="" selected>
-                Size
-              </option>
-              {this.state.selectedColor !== "Color" &&
-                Object.values(
-                  product["variants"][this.state.colorId]["sizes"]
-                ).map((val, idx) => (
-                  <SelectSize
-                    {...product["variants"][this.state.colorId]["sizes"][idx]}
-                    key={idx}
-                  />
+            <div className="product--controls">
+              <select
+                value={this.state.selectedColor}
+                onChange={this._selectColor}
+              >
+                <option value="" selected>
+                  Color
+                </option>
+                {product["variants"].map((val, idx) => (
+                  <SelectColor {...product["variants"][idx]} key={idx} />
                 ))}
-            </select>
+              </select>
 
-            <CartButton
-              name={product["name"]}
-              stock={this.state.quantity}
-              onClick={name => this._addedToCart(name)}
-            />
+              <select
+                value={this.state.selectedSize}
+                onChange={this._selectSize}
+              >
+                <option value="" selected>
+                  Size
+                </option>
+                {this.state.selectedColor !== "Color" &&
+                  Object.values(
+                    product["variants"][this.state.colorId]["sizes"]
+                  ).map((val, idx) => (
+                    <SelectSize
+                      {...product["variants"][this.state.colorId]["sizes"][idx]}
+                      key={idx}
+                    />
+                  ))}
+              </select>
 
+              <CartButton
+                name={product["name"]}
+                stock={this.state.quantity}
+                onClick={name => this._addedToCart(name)}
+              />
+            </div>
             {this.state.quantity !== null && (
               <Stock stock={this.state.quantity} />
             )}
