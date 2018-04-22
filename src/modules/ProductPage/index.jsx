@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 
-class Header extends Component {
+class ProductPage extends Component {
   render() {
     return <div />
   }
 }
 
-export default Header
+export default ProductPage
