@@ -30,9 +30,11 @@ class ProductPage extends Component {
 
   _getPriceInterval = variants => {
     /* 
-      Cycles our Variant and set a hi and low, for the selected
-      currency. If hi is equal to low, that menas that there is no
-      difference in our Product and shows only low
+      Cycles our Variant to set Hi and Low. Checks if there is a sale_price,
+      and creates a 2nd array with sale_price hi/lows.
+
+      Returns array of hi/low, if sale_price exists 2 arrays for discounted
+      and normal price
     */
     let { hi, low } = 0
     let sale = false
@@ -124,7 +126,6 @@ class ProductPage extends Component {
 
   render() {
     const { product } = this.state
-    console.log(this.state)
     return (
       <div className="container">
         <div className="product">
