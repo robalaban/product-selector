@@ -1,13 +1,11 @@
 import React, { Component } from "react"
 import Header from "../../components/Header"
-
-const SelectColor = ({ ...props }) => (
-  <option value={props.color}>{props.color}</option>
-)
-
-const SelectSize = ({ ...props }) => (
-  <option value={props.label.uk}> {props.label.uk} </option>
-)
+import {
+  SelectColor,
+  SelectSize,
+  Stock,
+  CartButton
+} from "./components/components"
 
 class ProductPage extends Component {
   constructor(props) {
@@ -17,7 +15,9 @@ class ProductPage extends Component {
       product: product,
       priceRange: [],
       selectedColor: "Color",
-      searchId: null
+      colorId: null,
+      sizeId: null,
+      quantity: null
     }
   }
 
@@ -57,20 +57,38 @@ class ProductPage extends Component {
   }
 
   _selectColor = event => {
-    let searchId = this.state.product["variants"].findIndex(
+    let colorId = this.state.product["variants"].findIndex(
       v => v["color"] === event.target.value
     )
+
     this.setState({
-      searchId: searchId,
+      colorId: colorId,
       selectedColor: event.target.value
     })
   }
 
   _selectSize = event => {
-    let as = this.state.product["variants"][this.state.searchId][
-      "sizes"
-    ].findIndex(v => v["label"]["uk"] == event.target.value)
-    console.log(as)
+    let sizes = this.state.product["variants"][this.state.colorId]["sizes"]
+    console.log(this.state.product["variants"][this.state.colorId])
+    let sizeId = sizes.findIndex(v => v["label"]["uk"] == event.target.value)
+
+    this.setState({
+      sizeId: sizeId,
+      quantity: sizes[sizeId]["quantity"]
+    })
+  }
+
+  _addedToCart = name => {
+    console.log(this.state.quantity)
+    if (this.state.quantity > 0) {
+      alert(`Added ${name} to cart!`)
+    }
+
+    if (this.state.quantity === 0) {
+      alert(`${name} is out of Stock`)
+    } else {
+      alert(`Select Size And Color`)
+    }
   }
 
   render() {
@@ -97,13 +115,23 @@ class ProductPage extends Component {
             </option>
             {this.state.selectedColor !== "Color" &&
               Object.values(
-                product["variants"][this.state.searchId]["sizes"]
+                product["variants"][this.state.colorId]["sizes"]
               ).map((val, idx) => (
                 <SelectSize
-                  {...product["variants"][this.state.searchId]["sizes"][idx]}
+                  {...product["variants"][this.state.colorId]["sizes"][idx]}
                 />
               ))}
           </select>
+
+          <CartButton
+            name={product["name"]}
+            stock={this.state.quantity}
+            onClick={name => this._addedToCart(name)}
+          />
+
+          {this.state.quantity !== null && (
+            <Stock stock={this.state.quantity} />
+          )}
         </div>
       </div>
     )
