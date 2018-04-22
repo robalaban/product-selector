@@ -2,8 +2,37 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
+  &--stock {
+    float: right;
+  }
   &--info {
     flex-basis: 250px;
+    &__price {
+      span {
+        &:last-child {
+          padding-left: 0.25rem;
+        }
+        &:first-child {
+          &:after {
+            padding-right: 0.25rem;
+            content: " -";
+          }
+        }
+        &:before {
+          content: "£";
+        }
+      }
+    }
+    &__rrp {
+      margin-left: 0.5rem;
+      color: #ddd;
+      font-style: italic;
+      span {
+        &:before {
+          content: "£";
+        }
+      }
+    }
   }
   &--controls {
     display: flex;

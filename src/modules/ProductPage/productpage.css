@@ -1,9 +1,25 @@
+@charset "UTF-8";
 .product {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly; }
+  .product--stock {
+    float: right; }
   .product--info {
     flex-basis: 250px; }
+    .product--info__price span:last-child {
+      padding-left: 0.25rem; }
+    .product--info__price span:first-child:after {
+      padding-right: 0.25rem;
+      content: " -"; }
+    .product--info__price span:before {
+      content: "£"; }
+    .product--info__rrp {
+      margin-left: 0.5rem;
+      color: #ddd;
+      font-style: italic; }
+      .product--info__rrp span:before {
+        content: "£"; }
   .product--controls {
     display: flex;
     flex-flow: column;

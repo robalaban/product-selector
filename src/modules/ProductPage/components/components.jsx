@@ -9,11 +9,7 @@ export const SelectSize = ({ ...props }) => (
 )
 
 export const Stock = ({ ...props }) =>
-  props.stock === 0 ? null : props.stock < 10 ? (
-    <span>Only {props.stock} remaining!</span>
-  ) : (
-    <span> {props.stock} </span>
-  )
+  props.stock === 0 ? null : <span>Only {props.stock} remaining!</span>
 
 export const CartButton = ({ ...props }) => (
   <button

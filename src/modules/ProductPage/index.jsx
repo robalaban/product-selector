@@ -27,6 +27,7 @@ class ProductPage extends Component {
   componentDidMount() {
     this._getPriceInterval(this.state.product["variants"])
   }
+
   _getPriceInterval = variants => {
     /* 
       Cycles our Variant and set a hi and low, for the selected
@@ -132,11 +133,23 @@ class ProductPage extends Component {
           </div>
           <div className="product--info">
             <h2>{product["name"]}</h2>
-            {this.state.price.map((val, idx) => <span key={idx}>{val}</span>)}
-            {this.state.sale && (
+            {this.state.sale ? (
               <span>
-                <span>RRP: </span>
-                {this.state.salePrice.map((val, idx) => (
+                <span className="product--info__price">
+                  {this.state.salePrice.map((val, idx) => (
+                    <span key={idx}>{val}</span>
+                  ))}
+                </span>
+                <span className="product--info__rrp">
+                  (RRP:
+                  {this.state.price.map((val, idx) => (
+                    <span key={idx}> {val}</span>
+                  ))})
+                </span>
+              </span>
+            ) : (
+              <span className="product--info__price">
+                {this.state.price.map((val, idx) => (
                   <span key={idx}>{val}</span>
                 ))}
               </span>
@@ -180,9 +193,10 @@ class ProductPage extends Component {
                 onClick={name => this._addedToCart(name)}
               />
             </div>
-            {this.state.quantity !== null && (
-              <Stock stock={this.state.quantity} />
-            )}
+            {this.state.quantity !== null &&
+              this.state.quantity < 10 && (
+                <Stock className="product--stock" stock={this.state.quantity} />
+              )}
           </div>
         </div>
       </div>
